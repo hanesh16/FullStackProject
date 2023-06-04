@@ -33,7 +33,6 @@ export class User extends DoggrBaseEntity {
 	@Property()
 	campusName!: string;
 	
-
 	@Enum(() => UserRole)
 	role!: UserRole; // string enum
 
