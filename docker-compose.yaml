@@ -1,0 +1,82 @@
+version: '3'
+
+services:  
+  postgres:
+    container_name: postgres
+    image: postgres:15-alpine
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=doggr
+      - POSTGRES_PASSWORD=doggr
+      - POSTGRES_DB=doggr
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U doggr"]
+      interval: 10s
+      timeout: 5s
+      retries: 25
+
+  minio:
+    container_name: minio
+    image: docker.io/bitnami/minio:latest
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      - MINIO_DEFAULT_BUCKETS=doggr:public
+      - MINIO_ROOT_USER=minioUser
+      - MINIO_ROOT_PASSWORD=minioPass
+      - MINIO_SERVER_ACCESS_KEY=minioUser
+      - MINIO_SERVER_SECRET_KEY=minioPass
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 25
+
+
+  backend:
+    container_name: backend
+    build: ./backend/
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=doggr
+      - DB_USER=doggr
+      - DB_PASS=doggr
+      - PORT=8080
+      - HOST=0.0.0.0
+      - PASSWORD=password
+      - NODE_ENV=development
+      - AUTH_SECRET=supersecret219340818092358
+      - MINIO_HOST=localhost
+      - MINIO_PORT=9000
+    depends_on:
+      postgres:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+
+  frontend:
+    container_name: frontend
+    build: ./frontend/
+    restart: always
+    ports:
+      - "88:80"
+    environment:
+      - API_HOST=backend
+      - PORT=8080
+
+volumes:
+  minio_data:
+    driver: local
+  db:
+    driver: local
