@@ -22,13 +22,17 @@ export class User extends DoggrBaseEntity {
 	email!: string;
 	
 	@Property()
-	name!: string
+	name!: string;
+	
+	@Property()
+	itemName!: string;
 
 	@Property()
 	password!: string;
-
+	
 	@Property()
-	petType!: string;
+	campusName!: string;
+	
 
 	@Enum(() => UserRole)
 	role!: UserRole; // string enum

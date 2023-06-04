@@ -43,7 +43,8 @@ export function UserRoutesInit(app: FastifyInstance) {
 				name,
 				email,
 				password: hashedPw,
-				petType,
+				itemName,
+				campusName,
 				imgUri: data.filename,
 				// We'll only create Admins manually!
 				role: UserRole.USER
@@ -70,10 +71,13 @@ export function UserRoutesInit(app: FastifyInstance) {
 
 	// UPDATE
 	app.put<{ Body: IUpdateUsersBody }>("/users", async (req, reply) => {
-		const { name, id, petType } = req.body;
+		const { name, id, petType, campusName, itemName, itemPrice } = req.body;
 
 		const userToChange = await req.em.findOneOrFail(User, id, {strict: true});
 		userToChange.name = name;
+		userToChange.itemName = itemName;
+		userToChange.itemprice = itemPrice;
+		userToChange.campusName = campusName;
 		userToChange.petType = petType;
 
 		// Reminder -- this is how we persist our JS object changes to the database itself
