@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import { FastifyInstance } from "fastify";
-import { MatchRoutesInit } from "./match_routes.js";
+import { MatchRoutesInit } from "./item_routes.js";
 import { MessageRoutesInit } from "./message_routes.js";
 import { UserRoutesInit } from "./user_routes.js";
 

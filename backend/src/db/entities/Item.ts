@@ -1,6 +1,6 @@
-import { Entity, Property, Unique, ManyToOne } from "@mikro-orm/core";
+import { Entity, Property, ManyToOne } from "@mikro-orm/core";
 import { SoftDeletable } from "mikro-orm-soft-delete";
-import { DoggrBaseEntity } from "./DoggrBaseEntity.js";
+// removed import for DoggerBaseEntity
 import { User } from "./User.js";
 
 @SoftDeletable(() => Item, "deleted_at", () => new Date())

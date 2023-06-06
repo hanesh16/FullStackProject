@@ -5,7 +5,7 @@ import { Item } from "./Item.js";
 
 import { Enum } from "@mikro-orm/core";
 import { Message } from "./Message.js";
-import { Pass } from "./Pass.js";
+//Removed import for entity Pass
 
 export enum UserRole {
 	ADMIN = 'Admin',

@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { Item } from "../db/entities/Item.js";
+import { Item } from "../db/entities/Item.js";// imported Item entity and removed match entities
 import { Pass } from "../db/entities/Pass.js";
 import { User } from "../db/entities/User.js";
 
@@ -11,6 +11,7 @@ export function MatchRoutesInit(app: FastifyInstance) {
 	 the entity from the database until you attempt to access its properties. This is used when
 	 you just need a reference to an entity in order to establish a relationship with another entity.
 	 */
+	//Made changes to Post request with creating new Item add logic
 	app.post<{ Body: { id: number; itemOwner_id: number } }>("/item", async (req, reply) => {
 		const { id, itemOwner_id } = req.body;
 
