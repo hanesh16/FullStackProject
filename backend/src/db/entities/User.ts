@@ -1,7 +1,7 @@
 import { Entity, Property, Unique, OneToMany, Collection, Cascade } from "@mikro-orm/core";
 import { SoftDeletable } from "mikro-orm-soft-delete";
 import { DoggrBaseEntity } from "./DoggrBaseEntity.js";
-import { Match } from "./Match.js";
+import { Item } from "./Item.js";
 
 import { Enum } from "@mikro-orm/core";
 import { Message } from "./Message.js";
@@ -41,32 +41,22 @@ export class User extends DoggrBaseEntity {
 
 	// Note that these DO NOT EXIST in the database itself!
 	@OneToMany(
-		() => Match,
-		match => match.owner,
+		() => Item,
+		item => item.owner,
 		{cascade: [Cascade.PERSIST, Cascade.REMOVE]}
 	)
-	matches!: Collection<Match>;
+	items!: Collection<Item>;
 
 	@OneToMany(
-		() => Match,
-		match => match.matchee,
+		() => Item,
+		item => item.itemOwner,
 		{cascade: [Cascade.PERSIST, Cascade.REMOVE]}
 	)
-	matched_by!: Collection<Match>;
+	added_by!: Collection<Item>;
 
-	@OneToMany(
-		() => Pass,
-		pass => pass.owner,
-		{cascade: [Cascade.PERSIST, Cascade.REMOVE]}
-	)
-	passes!: Collection<Pass>;
+	//To Add Item upload entity logic and logic for filter items
 
-	@OneToMany(
-		() => Match,
-		pass => pass.matchee,
-		{cascade: [Cascade.PERSIST, Cascade.REMOVE]}
-	)
-	passed_by!: Collection<Pass>;
+
 
 	// Orphan removal used in our Delete All Sent Messages route to single-step remove via Collection
 	@OneToMany(
