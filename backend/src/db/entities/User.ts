@@ -2,7 +2,7 @@ import { Entity, Property, Unique, OneToMany, Collection, Cascade } from "@mikro
 import { SoftDeletable } from "mikro-orm-soft-delete";
 import { DoggrBaseEntity } from "./DoggrBaseEntity.js";
 import { Item } from "./Item.js";
-
+import {ItemOwner} from "./ItemOwner.js";
 import { Enum } from "@mikro-orm/core";
 import { Message } from "./Message.js";
 //Removed import for entity Pass
@@ -49,7 +49,7 @@ export class User extends DoggrBaseEntity {
 
 	@OneToMany(
 		() => Item,
-		item => item.itemOwner,
+		item => item.itemName,
 		{cascade: [Cascade.PERSIST, Cascade.REMOVE]}
 	)
 	added_by!: Collection<Item>;
