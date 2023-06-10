@@ -54,7 +54,7 @@ export class User extends DoggrBaseEntity {
 	added_by!: Collection<Item>;
 
 	//To Add Item upload entity logic and logic for filter items
-
+	
 
 
 	// Orphan removal used in our Delete All Sent Messages route to single-step remove via Collection
